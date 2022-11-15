@@ -3,6 +3,7 @@ package me.dio.sacola.api.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import me.dio.sacola.api.enumeration.FormaPagamento;
 import me.dio.sacola.api.model.Item;
 import me.dio.sacola.api.model.Sacola;
 import me.dio.sacola.api.repository.SacolaRepository;
@@ -32,9 +33,36 @@ public class SacolaServiceImpl implements SacolaService {
 	}
 
 	@Override
-	public Sacola fecharSacola(Long id, int formaPagamento) {
+	public Sacola fecharSacola(Long id, int numeroformaPagamento) {
 
-		return null;
+		Sacola sacola = verSacola(id);
+		
+		if(sacola.getItens().isEmpty()) {
+			
+			throw new RuntimeException("Inclua itens na sacola!");
+		}
+		
+		FormaPagamento formaPagamento =
+		numeroformaPagamento == 0 ? FormaPagamento.DINHEIRO : FormaPagamento.MAQUINETA;
+		
+		sacola.setFormaPagamento(formaPagamento);
+		sacola.setFechado(true);
+		return sacolaRepository.save(sacola);
+		
+		 
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
