@@ -1,6 +1,8 @@
 package me.dio.sacola.api.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import me.dio.sacola.api.model.Item;
+import me.dio.sacola.api.model.Sacola;
 import me.dio.sacola.api.service.SacolaService;
 
 @RestController
@@ -22,6 +25,12 @@ public class SacolaResource {
 		
 		return sacolaService.incluirItemNaSacola(itemDto);
 		
+	}
+	
+	@GetMapping("/{id}")
+	public Sacola verSacola(@PathVariable("id") Long id) {
+		
+		return sacolaService.verSacola(id);
 	}
 
 }
